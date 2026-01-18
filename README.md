@@ -1,70 +1,140 @@
-# Getting Started with Create React App
+# Sky Scrapper - Flight Search Engine
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A modern, responsive Flight Search Engine built with React, TypeScript, and Tailwind CSS. Inspired by Google Flights with a focus on functionality and user experience.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- ✈️ **Flight Search**: Search flights by origin, destination, and dates
+- 📊 **Live Price Graph**: Real-time price trends visualization using Recharts
+- 🔍 **Advanced Filtering**: Filter by stops, price range, and airlines
+- 📱 **Responsive Design**: Mobile-first design with bottom sheet filters on mobile
+- ⚡ **Performance**: Optimized with memoization and debounced inputs
+- 🎨 **Modern UI**: Clean, intuitive interface built with Tailwind CSS
 
-### `npm start`
+## Tech Stack
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **Framework**: React 19 + TypeScript
+- **Styling**: Tailwind CSS
+- **Charts**: Recharts
+- **State Management**: Zustand
+- **API**: Amadeus Self-Service API (Test environment)
+- **Build Tool**: Create React App
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Getting Started
 
-### `npm test`
+### Prerequisites
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Node.js 16+ and npm
+- Amadeus API credentials (get them from [Amadeus Developers](https://developers.amadeus.com/))
 
-### `npm run build`
+### Installation
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. Clone the repository:
+```bash
+git clone <repository-url>
+cd Sky-Scrapper
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+2. Install dependencies:
+```bash
+npm install
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+3. Set up environment variables:
+```bash
+cp .env.example .env
+```
 
-### `npm run eject`
+Edit `.env` and add your Amadeus API credentials:
+```
+REACT_APP_AMADEUS_API_KEY=your_api_key_here
+REACT_APP_AMADEUS_API_SECRET=your_api_secret_here
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+4. Start the development server:
+```bash
+npm start
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+The app will open at [http://localhost:3000](http://localhost:3000)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Project Structure
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```
+src/
+├── components/          # React components
+│   ├── FlightSearch.tsx  # Search form with airport autocomplete
+│   ├── FlightCard.tsx   # Individual flight result card
+│   ├── FlightResults.tsx # Results list with loading/error states
+│   ├── FlightFilters.tsx # Filter sidebar/modal
+│   ├── PriceGraph.tsx   # Price trends chart
+│   └── Layout.tsx       # Main layout component
+├── hooks/               # Custom React hooks
+│   ├── useDebounce.ts   # Debounce hook for search inputs
+│   └── useAirportSearch.ts # Airport search with autocomplete
+├── services/            # API services
+│   └── amadeus.ts       # Amadeus API client
+├── store/               # State management
+│   └── flightStore.ts   # Zustand store for flight data
+├── types/               # TypeScript type definitions
+│   └── index.ts         # Shared types
+└── utils/               # Utility functions
+    └── flightUtils.ts   # Flight data processing utilities
+```
 
-## Learn More
+## Usage
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+1. **Search Flights**:
+   - Enter origin and destination (city name or IATA code)
+   - Select departure date (and return date for round trips)
+   - Click "Search Flights"
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+2. **Filter Results**:
+   - Use the filters sidebar (desktop) or filter button (mobile)
+   - Filter by stops, price range, or airlines
+   - Filters update results and price graph in real-time
 
-### Code Splitting
+3. **Sort Results**:
+   - Sort by price, duration, or departure time
+   - Sorting updates both the list and graph instantly
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+4. **View Price Trends**:
+   - The price graph automatically updates when filters or sorting changes
+   - Hover over data points to see detailed information
 
-### Analyzing the Bundle Size
+## API Configuration
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+This app uses the Amadeus Self-Service API test environment. To get API credentials:
 
-### Making a Progressive Web App
+1. Sign up at [Amadeus for Developers](https://developers.amadeus.com/)
+2. Create a new app
+3. Copy your API Key and API Secret
+4. Add them to your `.env` file
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+**Note**: The test environment has rate limits. For production use, you'll need to upgrade to a paid plan.
 
-### Advanced Configuration
+## Performance Optimizations
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+- Debounced search inputs to reduce API calls
+- Memoized chart data calculations
+- Efficient filtering and sorting with single source of truth
+- Optimized re-renders using React hooks and Zustand selectors
 
-### Deployment
+## Future Enhancements
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+- [ ] Skeleton loaders for better loading UX
+- [ ] Save recent searches (localStorage)
+- [ ] Currency toggle
+- [ ] Dark mode
+- [ ] Empty-state illustrations
+- [ ] Flight details modal
+- [ ] Price alerts
 
-### `npm run build` fails to minify
+## License
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+MIT
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+# sky-scrapper
